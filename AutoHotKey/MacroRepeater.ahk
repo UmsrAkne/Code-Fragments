@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0
 
 ; ======= 設定 =======
-TotalCount := 8
+TotalCount := 5
 DelayMs := 2000
 
 ; ======= 状態管理 =======
@@ -11,7 +11,12 @@ currentCount := 0 ; 現在の実行回数を管理
 
 ; ======= GUI カウンター =======
 counterGui := Gui("+AlwaysOnTop")
+counterGui.OnEvent("Close", (*) => ExitApp())
+counterGui.Add("Text",, "実行回数:")
+counterGui.Add("Edit", "vTotalCountEdit w60 Number", TotalCount)
+counterGui.Add("UpDown", "Range1-3000") ; 1-3000回まで
 counterGui.Add("Text", "vCountText w200 h30", "実行回数: 0 / " TotalCount)
+
 counterGui.Title := "進捗カウンター"
 counterGui.Show("x100 y100")
 
@@ -27,7 +32,7 @@ DoAction() {
         Sleep(1500)
         ToolTip()
         currentCount := 0
-        counterGui["CountText"].Text := "実行回数: 0 / " TotalCount
+        counterGui["CountText"].Text := "実行回数: 0 / " counterGui["TotalCountEdit"].Value
         return
     }
 
@@ -36,7 +41,7 @@ DoAction() {
     ; 処理の実行
 	; 一連のメイン処理が走っている間はスレッドがブロックされる
 	; そのため、キャンセルリクエストは受け付けない。
-    counterGui["CountText"].Text := "実行回数: " currentCount " / " TotalCount
+    counterGui["CountText"].Text := "実行回数: " currentCount " / " counterGui["TotalCountEdit"].Value
     Send("{Shift down}a{Shift up}")
     Sleep(100) ; Send直後の短いSleepは安全のため残すことが多い
     Send("{Ctrl down}a{Ctrl up}")
@@ -44,7 +49,7 @@ DoAction() {
     Click("left")
 
     ; 🚨 完了チェック
-    if (currentCount >= TotalCount) {
+    if (currentCount >= counterGui["TotalCountEdit"].Value) {
         SetTimer(DoAction, 0) ; タイマーを停止
         running := false
         ToolTip("完了！")
