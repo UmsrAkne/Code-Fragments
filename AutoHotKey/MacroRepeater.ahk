@@ -11,6 +11,7 @@ currentCount := 0 ; 現在の実行回数を管理
 
 ; ======= GUI カウンター =======
 counterGui := Gui("+AlwaysOnTop")
+counterGui.OnEvent("Close", (*) => ExitApp())
 counterGui.Add("Text",, "実行回数:")
 counterGui.Add("Edit", "vTotalCountEdit w60 Number", TotalCount)
 counterGui.Add("UpDown", "Range1-3000") ; 1-3000回まで
