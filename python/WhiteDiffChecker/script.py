@@ -62,8 +62,18 @@ print("std:", np.std(white_ratios))
 # 画像の重複チェック
 similar_pairs = []
 for i in range(1, len(images)):
-    print(f"Comparing {i:04d}/{len(images) - 1:04d}...")
-    score = ssim(images[i], images[i - 1])
+    print(f"Comparing {i:04d}/{len(images)-1:04d}...")
+
+    img1 = images[i]
+    img2 = images[i - 1]
+
+    # --- 高速プリチェック（差分の総和）------------------------
+    diff = np.sum(np.abs(img1 - img2))
+    if diff > 200000:   # 閾値は好みに調整
+        continue
+
+    # --- 必要な場合だけ SSIM（重い） --------------------------
+    score = ssim(img1, img2)
     if score > 0.95:
         similar_pairs.append((i - 1, i))
 
