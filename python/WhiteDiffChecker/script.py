@@ -54,7 +54,7 @@ high_white_images = [i for i, w in enumerate(white_ratios) if w > 0.95]
 
 # デバッグ出力
 for i, w in enumerate(white_ratios):
-    print(i, paths[i], w)
+    print(f"{i:04d} {paths[i]} : {w}")
 
 print("mean:", np.mean(white_ratios))
 print("std:", np.std(white_ratios))
@@ -62,7 +62,7 @@ print("std:", np.std(white_ratios))
 # 画像の重複チェック
 similar_pairs = []
 for i in range(1, len(images)):
-    print(f"Comparing {i}/{len(images) - 1}...")
+    print(f"Comparing {i:04d}/{len(images) - 1:04d}...")
     score = ssim(images[i], images[i - 1])
     if score > 0.95:
         similar_pairs.append((i - 1, i))
