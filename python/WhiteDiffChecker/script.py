@@ -1,4 +1,4 @@
-import cv2
+from PIL import Image
 import numpy as np
 from skimage.metrics import structural_similarity as ssim
 import glob
@@ -29,7 +29,19 @@ white_ratios = []
 images = []
 
 for p in paths:
-    img = cv2.imread(p, cv2.IMREAD_GRAYSCALE)
+    # img = cv2.imread(p, cv2.IMREAD_GRAYSCALE)
+    img = Image.open(p).convert("L")
+    img = np.array(img)
+
+    if img is None:
+        print("読み込み失敗:", p)
+        continue
+
+    if img.size == 0:
+        print("空画像:", p, "shape=", img.shape)
+        continue
+
+    print("読み込み成功", p)
     images.append(img)
 
     # 白の閾値設定
