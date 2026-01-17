@@ -24,12 +24,12 @@ counterGui.Show("x100 y100")
 DoAction() {
     global running, cancelToken, currentCount, TotalCount, DelayMs, counterGui
 
-    ; 🚨 中断チェック
+    ; 中断チェック
     if cancelToken {
         SetTimer(DoAction, 0) ; タイマーを即座に停止
         running := false
-        ToolTip("キャンセルされました😌")
-        Sleep(1500)
+        ToolTip("キャンセルされました")
+        Sleep(1000)
         ToolTip()
         currentCount := 0
         counterGui["CountText"].Text := "実行回数: 0 / " counterGui["TotalCountEdit"].Value
@@ -42,18 +42,18 @@ DoAction() {
 	; 一連のメイン処理が走っている間はスレッドがブロックされる
 	; そのため、キャンセルリクエストは受け付けない。
     counterGui["CountText"].Text := "実行回数: " currentCount " / " counterGui["TotalCountEdit"].Value
-    Send("{Shift down}a{Shift up}")
-    Sleep(100) ; Send直後の短いSleepは安全のため残すことが多い
-    Send("{Ctrl down}a{Ctrl up}")
-    Sleep(100)
+
+    Sleep(1900)
+	Send("!{PrintScreen}")
+    Sleep(600)
     Click("left")
 
-    ; 🚨 完了チェック
+    ; 完了チェック
     if (currentCount >= counterGui["TotalCountEdit"].Value) {
         SetTimer(DoAction, 0) ; タイマーを停止
         running := false
         ToolTip("完了！")
-        Sleep(1500)
+        Sleep(1000)
         ToolTip()
         currentCount := 0
         return
