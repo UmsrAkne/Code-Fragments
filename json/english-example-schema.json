@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "en": {
+            "type": "string",
+            "description": "英語の例文"
+          },
+          "ja": {
+            "type": "string",
+            "description": "和訳"
+          },
+          "explanation": {
+            "type": "string",
+            "description": "文法やフレーズについての簡潔な解説"
+          }
+        },
+        "required": [
+          "en",
+          "ja",
+          "explanation"
+        ]
+      }
+    }
+  },
+  "required": [
+    "examples"
+  ]
+}
