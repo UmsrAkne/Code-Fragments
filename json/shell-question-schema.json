@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "quizzes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "description": "実現したい操作や目的（例：ファイルの一覧を詳細表示する）"
+          },
+          "command": {
+            "type": "string",
+            "description": "正解となるシェルコマンド（例：ls -l）"
+          },
+          "note": {
+            "type": "string",
+            "description": "使用したオプションやコマンドの簡単な解説"
+          }
+        },
+        "required": [
+          "question",
+          "command",
+          "note"
+        ]
+      }
+    }
+  },
+  "required": [
+    "quizzes"
+  ]
+}
